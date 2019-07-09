@@ -1,0 +1,6 @@
+make test_vcd to test the core only 
+
+the real program for soc is 
+
+picosoc/make hx8ksim
+

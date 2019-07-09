@@ -1,0 +1,108 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x0000000000100000 0x0000000000400000 xr
+RAM              0x0000000000000000 0x0000000000000400 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.text           0x0000000000100000     0x22c8
+                0x0000000000100000                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000000100000      0x2ba start.o
+                0x0000000000100000                reset_vec
+                0x0000000000100010                irq_vec
+                0x0000000000100154                start
+                0x0000000000100230                loop
+                0x0000000000100234                flashio_worker_begin
+                0x00000000001002b4                flashio_worker_end
+ .text          0x00000000001002ba     0x15b0 /tmp/ccScqVdi.o
+                0x00000000001002ba                flashio
+                0x00000000001003dc                set_flash_qspi_flag
+                0x0000000000100490                set_flash_latency
+                0x0000000000100524                set_flash_mode_spi
+                0x0000000000100546                set_flash_mode_dual
+                0x0000000000100570                set_flash_mode_quad
+                0x000000000010059a                set_flash_mode_qddr
+                0x00000000001005c4                putchar
+                0x00000000001005f6                print
+                0x000000000010062c                print_hex
+                0x00000000001006b0                print_dec
+                0x0000000000100a0a                getchar_prompt
+                0x0000000000100ab6                getchar
+                0x0000000000100ace                cmd_print_spi_state
+                0x0000000000100b96                xorshift32
+                0x0000000000100bf0                cmd_memtest
+                0x0000000000100d8a                cmd_read_flash_id
+                0x0000000000100e04                cmd_read_flash_regs_print
+                0x0000000000100ebc                cmd_read_flash_regs
+                0x0000000000100f66                cmd_benchmark
+                0x0000000000101150                cmd_benchmark_all
+                0x0000000000101508                cmd_echo
+                0x0000000000101548                main
+ .text          0x000000000010186a      0x322 irq.o
+                0x000000000010186a                irq
+ *(.text*)
+ *(.rodata)
+ *fill*         0x0000000000101b8c        0x0 
+ .rodata        0x0000000000101b8c      0x5b0 /tmp/ccScqVdi.o
+ *(.rodata*)
+ .rodata.str1.4
+                0x000000000010213c      0x18c irq.o
+                                        0x18f (size before relaxing)
+ *(.srodata)
+ *(.srodata*)
+                0x00000000001022c8                . = ALIGN (0x4)
+                0x00000000001022c8                _etext = .
+                0x00000000001022c8                _sidata = _etext
+
+.rela.dyn       0x00000000001022c8        0x0
+ .rela.text     0x00000000001022c8        0x0 start.o
+
+.data           0x0000000000000000      0x3f0 load address 0x00000000001022c8
+                0x0000000000000000                . = ALIGN (0x4)
+                0x0000000000000000                _sdata = .
+                0x0000000000000000                _ram_start = .
+                0x0000000000000000                . = ALIGN (0x4)
+ *(.data)
+ .data          0x0000000000000000      0x3f0 start.o
+                0x0000000000000170                irq_regs
+                0x00000000000003f0                irq_stack
+ .data          0x00000000000003f0        0x0 /tmp/ccScqVdi.o
+ .data          0x00000000000003f0        0x0 irq.o
+ *(.data*)
+ *(.sdata)
+ *(.sdata*)
+                0x00000000000003f0                . = ALIGN (0x4)
+                0x00000000000003f0                _edata = .
+
+.bss            0x00000000000003f0        0xc load address 0x00000000001026b8
+                0x00000000000003f0                . = ALIGN (0x4)
+                0x00000000000003f0                _sbss = .
+ *(.bss)
+ .bss           0x00000000000003f0        0x0 start.o
+ .bss           0x00000000000003f0        0x0 /tmp/ccScqVdi.o
+ .bss           0x00000000000003f0        0x0 irq.o
+ *(.bss*)
+ *(.sbss)
+ .sbss          0x00000000000003f0        0xc irq.o
+ *(.sbss*)
+ *(COMMON)
+                0x00000000000003fc                . = ALIGN (0x4)
+                0x00000000000003fc                _ebss = .
+
+.heap           0x00000000000003fc        0x0
+                0x00000000000003fc                . = ALIGN (0x4)
+                0x00000000000003fc                _heap_start = .
+LOAD start.o
+LOAD /tmp/ccScqVdi.o
+LOAD irq.o
+OUTPUT(hx8kdemo_fw.elf elf32-littleriscv)
+
+.comment        0x0000000000000000       0x11
+ .comment       0x0000000000000000       0x11 /tmp/ccScqVdi.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 irq.o
